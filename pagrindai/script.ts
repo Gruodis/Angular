@@ -21,6 +21,8 @@ function log(message) {
 };
 
 
+
+
 log('Hello world!');
 
 
