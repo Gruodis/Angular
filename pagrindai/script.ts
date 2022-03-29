@@ -1,5 +1,13 @@
-// Pagrindai
+/*
+
+
+
+Pagrindai
+
+
 // Kintamuju tipai:
+
+*/
 
 let g: number = 10;
 let h: string = "Labas";
