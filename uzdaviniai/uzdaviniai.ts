@@ -17,7 +17,7 @@ console.log(faktorialas(2));
 
 let bdd = (x: number, y: number): number => {
 
-    let rezult: number;
+    let rezult = 1;
     for (let i = x; i > 0; i--) {
         console.log('bdd 1', i);
         if (x % i === 0 && y % i === 0) {
@@ -27,8 +27,10 @@ let bdd = (x: number, y: number): number => {
 
 
     }
+    return rezult;
+
 }
-console.log('bdd ', bdd(24, 15));
+console.log('Bdd ', bdd(45, 2025));
 
 interface Koordinates {
     x: number;

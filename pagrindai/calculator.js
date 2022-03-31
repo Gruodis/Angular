@@ -1,19 +1,20 @@
+"use strict";
 // const outputAtsakymas: HTMLElement | null = document.getElementById("atsakymas");
-var outputAtsakymas = document.getElementById("atsakymas");
-var actionButton = document.getElementById("action");
-var numX = document.getElementById("num_X");
-var numY = document.getElementById("num_Y");
+const outputAtsakymas = document.getElementById("atsakymas");
+const actionButton = document.getElementById("action");
+let numX = document.getElementById("num_X");
+let numY = document.getElementById("num_Y");
 console.log("input", parseInt(numX.value), parseInt(numY.value));
 // let geometrija = {
-var geometrija2 = {
+let geometrija2 = {
     x: parseInt(numX.value),
     y: parseInt(numX.value)
 };
 // console.log("geometrija", darom2(geometrija2));
-var darom2 = function (p) {
+const darom2 = (p) => {
     return Math.sqrt(p.x * p.x + p.y * p.y);
 };
-var skaiciuokKaiPaspausiu = function () {
+const skaiciuokKaiPaspausiu = () => {
     geometrija2.x = numX.valueAsNumber; // priskiriam nauja X reiksme, kuria ivedem i input
     geometrija2.y = numY.valueAsNumber; // priskiriam nauja Y reiksme, kuria ivedem i input
     if (outputAtsakymas != null) {

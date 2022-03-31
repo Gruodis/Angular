@@ -24,7 +24,7 @@ let dazai: Spalva = Spalva.Juoda;
 console.log(dazai);
 
 
-function log(message) {
+function log(message: string) {
     console.log(message);
 };
 
@@ -59,13 +59,13 @@ let skaicius; // ANY tipo kintamasis
 
 skaicius = 5;
 
-let keiciamKintamohoTipa: number;
+let keiciamKintamojoTipa: number;
 
-keiciamKintamohoTipa = skaicius; // nera priskirimo klaidos, jeigu nenaudojamas "strict" formatas
+keiciamKintamojoTipa = skaicius; // nera priskirimo klaidos, jeigu nenaudojamas "strict" formatas
 
-// keiciamKintamohoTipa = (<number>skaicius); // konvertavimas
+// keiciamKintamojoTipa = (<number>skaicius); // konvertavimas
 
-keiciamKintamohoTipa = (skaicius as number); // konvertavimas
+keiciamKintamojoTipa = (skaicius as number); // konvertavimas
 
 let a;
 

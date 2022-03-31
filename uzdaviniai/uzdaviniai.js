@@ -1,7 +1,8 @@
+"use strict";
 // faktorialas
-var faktorialas = function (x) {
-    var rezult = 1;
-    for (var i = 1; i <= x; i++) {
+let faktorialas = (x) => {
+    let rezult = 1;
+    for (let i = 1; i <= x; i++) {
         rezult *= i;
     }
     return rezult;
@@ -9,21 +10,22 @@ var faktorialas = function (x) {
 console.log(faktorialas(5));
 console.log(faktorialas(2));
 // dvieju kintamuju bendras didziausias daliklis
-var bdd = function (x, y) {
-    var rezult;
-    for (var i = x; i > 0; i--) {
+let bdd = (x, y) => {
+    let rezult = 1;
+    for (let i = x; i > 0; i--) {
         console.log('bdd 1', i);
         if (x % i === 0 && y % i === 0) {
             return i;
         }
     }
+    return rezult;
 };
-console.log('bdd ', bdd(24, 15));
-var darom = function (p) {
-    return Math.sqrt(p.x ^ 2 + p.y ^ 2);
+console.log('Bdd ', bdd(45, 2025));
+let darom = (p) => {
+    return Math.sqrt(p.x * p.x + p.y * p.y);
 };
 // let geometrija = {
-var geometrija = {
+let geometrija = {
     x: 5,
     y: 5
 };

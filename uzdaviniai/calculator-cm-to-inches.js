@@ -1,17 +1,18 @@
+"use strict";
 // const outputAtsakymas: HTMLElement | null = document.getElementById("atsakymas");
-var atsakymoDiv = document.getElementById("atsakymas");
-var cmToInchButton = document.getElementById("action");
-var numInch = document.getElementById("num_X");
+const atsakymoDiv = document.getElementById("atsakymas");
+const cmToInchButton = document.getElementById("action");
+let numInch = document.getElementById("num_X");
 console.log("input", parseInt(numInch.value));
 // let geometrija = {
-var cmToInch = {
-    x: parseInt(numInch.value)
+let cmToInch = {
+    x: parseInt(numInch.value),
 };
 // console.log("geometrija", vykdom(cmToInch));
-var vykdom = function (p) {
+const vykdom = (p) => {
     return p.x / 2.54;
 };
-var vykdykKonvertavima = function () {
+const vykdykKonvertavima = () => {
     cmToInch.x = numInch.valueAsNumber; // priskiriam nauja X reiksme, kuria ivedem i input
     if (atsakymoDiv != null) { // tikriname ar yra sukurtas HTML elemntas atsakymui ikelti
         // outputAtsakymas.innerHTML = vykdom(cmToInch).toString(); // .toString() konvertuoja NUMBER i STRING, kad galetu atvaizduoti innerHTML
@@ -20,7 +21,7 @@ var vykdykKonvertavima = function () {
         // outputAtsakymas.innerHTML = "Atsakymas:" + vykdom(cmToInch);
         if (numInch.value != "") { // jeigu input fieldas nera tuscias
             console.log("input", parseInt(numInch.value));
-            atsakymoDiv.innerHTML = "Atsakymas: ".concat(numInch.value) + "cm = " + parseFloat(vykdom(cmToInch).toFixed(2)) + " coliai"; // isveda <hr /> kaip HTML elementa
+            atsakymoDiv.innerHTML = `Atsakymas: ${numInch.value}` + "cm = " + parseFloat(vykdom(cmToInch).toFixed(2)) + " coliai"; // isveda <hr /> kaip HTML elementa
         }
         else { // jeigu input fieldas yra tuscias
             console.log("input2", parseInt(numInch.value));

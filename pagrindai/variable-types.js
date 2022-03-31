@@ -1,11 +1,20 @@
-// Pagrindai
+"use strict";
+/*
+
+
+
+Pagrindai
+
+
 // Kintamuju tipai:
-var g = 10;
-var h = "Labas";
-var f = false; // true or false
-var j = 55;
-var masyvasNumbers = [1, 2, 3, 4, 5];
-var masyvasStrings = ["labas", 'vakaras', 'vaikuciai'];
+
+*/
+let g = 10;
+let h = "Labas";
+let f = false; // true or false
+let j = 55;
+let masyvasNumbers = [1, 2, 3, 4, 5];
+let masyvasStrings = ["labas", 'vakaras', 'vaikuciai'];
 var Spalva;
 (function (Spalva) {
     Spalva[Spalva["Juoda"] = 0] = "Juoda";
@@ -13,7 +22,7 @@ var Spalva;
     Spalva[Spalva["Balta"] = 2] = "Balta";
 })(Spalva || (Spalva = {}));
 ;
-var dazai = Spalva.Juoda;
+let dazai = Spalva.Juoda;
 console.log(dazai);
 function log(message) {
     console.log(message);
@@ -22,23 +31,23 @@ function log(message) {
 log('Hello world!');
 // Tipai
 // let kintamais = 5;
-var kintamais; // deklaruojame ANY tipo kintamaji
+let kintamais; // deklaruojame ANY tipo kintamaji
 kintamais = 5;
 kintamais = "Penki";
-var vardas = 'Aurelijus';
+let vardas = 'Aurelijus';
 // vardas.endsWith("umas");
 console.log(vardas);
-var pavarde;
+let pavarde;
 pavarde = 'Stanaitis';
 console.log('Labas, mano vardas', vardas, pavarde);
 // ANY tipo kintamojo konvertavimas i string ar kita tipa
-var skaicius; // ANY tipo kintamasis
+let skaicius; // ANY tipo kintamasis
 skaicius = 5;
-var keiciamKintamohoTipa;
-keiciamKintamohoTipa = skaicius; // nera priskirimo klaidos, jeigu nenaudojamas "strict" formatas
-// keiciamKintamohoTipa = (<number>skaicius); // konvertavimas
-keiciamKintamohoTipa = skaicius; // konvertavimas
-var a;
+let keiciamKintamojoTipa;
+keiciamKintamojoTipa = skaicius; // nera priskirimo klaidos, jeigu nenaudojamas "strict" formatas
+// keiciamKintamojoTipa = (<number>skaicius); // konvertavimas
+keiciamKintamojoTipa = skaicius; // konvertavimas
+let a;
 function beta() {
     a = 5;
 }
@@ -51,7 +60,7 @@ function suma(x, y) {
 }
 console.log(suma(5, 10));
 // ARROW funkcija (lambda)
-var suma2 = function (x, y) {
+let suma2 = (x, y) => {
     return x + y;
 };
 console.log(suma2(25, 10));
