@@ -35,43 +35,65 @@ class Zmogus {
     // this.amzius = amzius;
     // this.mailas = mailas;
     // sutrumpinimas auksciau esancio kodo
-    constructor(vardas, amzius, mailas) {
-        this.vardas = vardas;
-        this.amzius = amzius;
-        this.mailas = mailas;
-        if (this.vardas == 'Petras') {
-            this.amzius = 100; // galie keisti kintamaji tik class viduje arba naudojant - set
+    constructor(_vardas, _amzius, _mailas) {
+        this._vardas = _vardas;
+        this._amzius = _amzius;
+        this._mailas = _mailas;
+        if (this._vardas == 'Petras') {
+            this._amzius = 100; // galie keisti kintamaji tik class viduje arba naudojant - set
         }
-        if (this.mailas == undefined) {
-            this.mailas = "tuscias email value"; // galie keisti kintamaji tik class viduje
+        if (this._mailas == undefined) {
+            this._mailas = "tuscias email value \n"; // galie keisti kintamaji tik class viduje
         }
         else {
-            this.mailas = mailas + " tutu"; // galie keisti kintamaji tik class viduje
+            this._mailas = _mailas + " turiu e-mail. \n"; // galie keisti kintamaji tik class viduje
         }
     }
-    //set naudojame saugiai pakeisti kintamojo reiksmes, kai nurodytas - private(modifier)
-    setAmzius(amziusNew) {
+    // public getVardas() { // naudojame zemiau esanti get Vardas()
+    //     return this.vardas;
+    // }
+    get vardas() {
+        return this._vardas + '\n \n';
+    }
+    // set naudojame saugiai pakeisti kintamojo reiksmes, kai nurodytas - private(modifier), 
+    // bet vietoje public setAmzius(...), naudojame zemiau esanti uzrasyma su set Amzius(...)
+    // public setAmzius(amziusNew: number) {
+    //     if (amziusNew < 18) {
+    //         this.amzius = amziusNew;
+    //         console.log(this.vardas + ' YRA Nepilnametis!')
+    //     }
+    //     else {
+    //         this.amzius = amziusNew;
+    //     }
+    // }
+    set amzius(amziusNew) {
         if (amziusNew < 18) {
-            this.amzius = amziusNew;
-            console.log(this.vardas + ' YRA Nepilnametis!');
+            this._amzius = amziusNew;
+            console.log(this._vardas + ' YRA Nepilnametis! \n \n');
         }
         else {
-            this.amzius = amziusNew;
+            this._amzius = amziusNew;
         }
     }
-    getVardas() {
-        return this.vardas;
+    set vardas(vardasNew) {
+        this._vardas = vardasNew;
     }
     // private output() { // neleistu issikviesti sio metodo uz class ribu.
     output() {
-        console.log('Mano vardas ' + this.vardas + ', man ' + this.amzius + ' metai. ' + this.mailas + '');
+        console.log('Mano vardas ' + this._vardas + ', man ' + this._amzius + ' metai. ' + this._mailas + '\n \n');
     }
 }
 const jonas = new Zmogus('Jonas', 32);
 const petras = new Zmogus('Petras', 54, 'emailas@gmail.com');
-jonas.vardas = 'Karabasas'; // galime keisti public kintamojo reiksme
-// petras.amzius = 300; // galime keisti public kintamojo reiksme
-jonas.setAmzius(16);
-console.log('getVardas: ' + petras.getVardas());
+// galime keisti public kintamojo reiksme naudodami:
+// jonas.vardas = 'Karabasas'; 
+// petras.amzius = 300;
+// pakeisti private kintamojo reiksme, naudojame
+// jonas.setAmzius(16);
+// vietoje jonas.setAmzius() naudojame jonas.Amzius = 14;
+petras.amzius = 14;
+petras.vardas = "Kazys";
+// console.log('getVardas: ' + petras.getVardas()); // vietoje petras.getVardas() naudojame petras.Vardas
+console.log('get Vardas: ' + petras.vardas);
 jonas.output();
 petras.output();
