@@ -33,14 +33,16 @@ let rodykPrekiuSarasa = () => {
 
     let tmp: string = '';
     tiekejas.forEach(preke => { // is objekto formuojam prekiu sarasa su forEach
-        tmp += "Prekes pavadinimas: " + preke.pavadinimas + '<br>' + " Kaina su PVM: " + preke.kainaSuPVM + '<br>' + " Kiekis: " + preke.kiekis + '<br><hr>';
+        tmp += "Prekės pavadinimas: <strong>" + preke.pavadinimas.toUpperCase() + '<br>'
+            + "</strong> Kaina su PVM: <strong>" + preke.kainaSuPVM + '</strong> € <br>'
+            + " Kiekis: <strong>" + preke.kiekis + '</strong><br><hr>';
     })
     if (outputAtsakymas != null) {
         outputAtsakymas.innerHTML = tmp; // atvaizdavimas DOM
     }
 };
 
-const tiekejas: Prekes[] = []; // deklaruojam tuscia masyva i kuri bus push'inami duomenys is pildymo formos
+let tiekejas: Prekes[] = []; // deklaruojam tuscia masyva i kuri bus push'inami duomenys is pildymo formos
 
 // imam issaugotus duomenis is localStorage
 let jsonParse = localStorage.getItem('saugomLocalStorage');
@@ -67,27 +69,31 @@ function nuskaitomLocalStorage() {
 nuskaitomLocalStorage(); 
 
 
-console.log('Tiekejas ą ', tiekejas);
-
 // IVESTU DUOMENU PUSH i masyva
 if (actionButton != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
     actionButton.onclick = () => {
-        tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva
-        rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
-        localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas))
+        if (inputName.value != '' && inputPrice.value.length != 0 && inputAmount.value.length != 0) { // tikriname ar visi input laukai uzpildyti
+            tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva
+            rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
+            localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas));
 
-        console.log('Tiekejas b ', tiekejas, inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber);
+            // isvalom input laukus po sekmingo duomenu issaugojimo
+            inputName.value = '';
+            inputPrice.value = '';
+            inputAmount.value = '';
+        }
+        else { // pranesame apie neuzpildytus laukus
+            alert("LAUKAI tusti")
+        }
 
     }
 }
 // clear()
-if (clearStorageButton != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
+if (clearStorageButton != null && outputAtsakymas != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
     clearStorageButton.onclick = () => {
-        tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva
-        rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
-        localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas))
-
-        console.log('Tiekejas b ', tiekejas, inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber);
+        tiekejas = [];
+        window.localStorage.clear(); // istrinam duomenis is localStorage
+        outputAtsakymas.innerHTML = ''; // istrinam info apie preke is DOM
 
     }
 }
