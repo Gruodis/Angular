@@ -8,6 +8,7 @@ practice
 */
 
 const outputAtsakymas = document.getElementById("atsakymas");
+
 const actionButton = document.getElementById("action");
 const clearStorageButton = document.getElementById("clear");
 let inputName = <HTMLInputElement>document.getElementById("preke_pavadinimas");
@@ -37,20 +38,56 @@ class Prekes {
 // arrow funkcija ivestu(input laukuose) duomenu atvaizdavimui
 let rodykPrekiuSarasa = () => {
 
-    let tmp: string = '';
-    tiekejas.forEach(preke => { // is objekto formuojam prekiu sarasa su forEach
-        tmp += "Prekė: <strong>" + preke.pavadinimas.toUpperCase() + '<br>'
+    // let tmp: string = '';
+    if (outputAtsakymas != null) {
+
+        outputAtsakymas.innerHTML = ''; // pries atvaizduodami prekiu sarasa, istrinam visa ankstesne info apie preke(-es) is DOM
+
+
+        tiekejas.forEach((preke, index) => { // is objekto formuojam prekiu sarasa su forEach
+
+            const div = document.createElement("div");
+            div.setAttribute("id", (index).toString());
+            div.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
+
+            const p = document.createElement("p");
+
+
+            const button = document.createElement("button");
+            button.setAttribute("class", "btn btn-danger delete-item");
+            button.innerHTML = " X " + preke.pavadinimas;
+
+            p.innerHTML = " index: <strong>" + index + '<br>'
+                + "</strong> Prekė: <strong>" + preke.pavadinimas.toUpperCase() + '<br>'
             + "</strong> Kaina: <strong>" + preke.kainaSuPVM.toFixed(2) + '</strong>€ <i >su PVM</i>, <strong>' + preke.kaina + '</strong>€ <i>be PVM</i><br>' //parseFloat(vykdom(cmToInch).toFixed(2)
             // + "</strong> Kaina su PVM: <strong>" + preke.kainaSuPVM + '</strong> € <br>' //parseFloat(vykdom(cmToInch).toFixed(2)
-            + " Kiekis: <strong>" + Math.floor(preke.kiekis) + '</strong><br><hr>';
-    })
-    if (outputAtsakymas != null) {
-        outputAtsakymas.innerHTML = tmp; // atvaizdavimas DOM
+                + " Kiekis: <strong>" + Math.floor(preke.kiekis) + '</strong><br><hr>';
+
+            div.append(p, button);
+
+            outputAtsakymas?.appendChild(div); // outputAtsakymas.innerHTML = tmp; // atvaizdavimas DOM
+
+            button.onclick = () => {
+                console.log("Paspaude: ", preke.pavadinimas);
+                deleteItem(index)
+
+            }
+
+        })
+        console.log('baigiam rodyti tiekejo prekes')
+
     }
 };
 
 let tiekejas: Prekes[] = []; // deklaruojam tuscia masyva i kuri bus push'inami duomenys is pildymo formos
 
+
+/*
+
+DEMESIO !!!
+DUOMENU atsisiuntimas is localStorage ir objekto(-u) suformavimas pagal class Prekes, bei objeto(-u), issaugojimas masyve - tiekejas[].
+
+*/
 // atsisiunciam issaugotus duomenis is localStorage
 let jsonParse = localStorage.getItem('saugomLocalStorage');
 
@@ -66,7 +103,7 @@ let jsonParse = localStorage.getItem('saugomLocalStorage');
         }
         dataBank.forEach((preke: prekesAtributai) => { // imame JSON objektus
             let applyClass = new Prekes(preke._pavadinimas, preke._kaina, preke._kiekis); // konstruojam JSON objektus pagal class Prekes template'a
-            tiekejas.push(applyClass); // pushinam objektus sukonstruotus pagal class Prekes template'a i tiekejas masyva
+            tiekejas.push(applyClass); // pushinam objektus sukonstruotus pagal class Prekes template'a i tiekejas[] masyva
 
         }
         );
@@ -74,12 +111,16 @@ let jsonParse = localStorage.getItem('saugomLocalStorage');
     };
 
 
+/*
 
-// IVESTU DUOMENU PUSH i masyva
+DEMESIO !!!
+NAUJOS PREKES IVESTU DUOMENU PUSH(saugojimas) i masyva ir localStorage
+
+*/
 if (actionButton != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
     actionButton.onclick = () => {
         if (inputName.value != '' && inputPrice.value.length != 0 && inputAmount.value.length != 0) { // tikriname ar visi input laukai uzpildyti
-            tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva
+            tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva - tiekejas[].
             rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
             localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas));
 
@@ -94,19 +135,58 @@ if (actionButton != null) { //butina patikrinti ar egzistuoja DOM elementai(mygt
 
     }
 }
-// clear()
+// completely clear data from localstorage
 if (clearStorageButton != null && outputAtsakymas != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
     clearStorageButton.onclick = () => {
+
         tiekejas = [];
         window.localStorage.removeItem('saugomLocalStorage'); // istrinam duomenis is localStorage
-        console.log('trinam')
-        outputAtsakymas.innerHTML = ''; // istrinam info apie preke is DOM
-
+        console.log('trinam', tiekejas, window.localStorage.getItem('saugomLocalStorage'));
+        rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
     }
 }
 console.log(tiekejas, inputPrice, inputAmount)
 
 
+
+// let buttonDeleteItem = document.querySelectorAll(".delete-item");
+
+
+// for (const button of buttonDeleteItem) {
+//     button.addEventListener('click', function (event) {
+//         //...
+//         console.log(button)
+//     })
+// }
+// buttonDeleteItem.forEach((button, index) => {
+
+
+//     button.onclick = (index: number) => {
+//         tiekejas.splice(index, 1);
+//     };
+
+
+// });
+// console.log('Delete item: ', buttonDeleteItem)
+
+
+let deleteItem = (index: number) => {
+    tiekejas.splice(index, 1);
+    console.log("tiekejo data po istrinimo: ", tiekejas)
+    rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)'
+
+}
+// deleteItem(0);
+
+
+// 1. Select the div element using the id property
+// const app = document.getElementById("app");
+// 2. Create a new <p></p> element programmatically
+// const p = document.createElement("p");
+// 3. Add the text content
+// p.textContent = ;
+// 4. Append the p element to the div element
+// outputAtsakymas?.appendChild(p);
 
 // tiekejas.push(new Prekes("Apelsinai", 2.57, 700));
 
