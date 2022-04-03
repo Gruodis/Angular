@@ -12,11 +12,11 @@ const bendraInfo = document.getElementById("bendra-info");
 
 const actionButton = document.getElementById("action");
 const clearStorageButton = document.getElementById("clear");
-let inputName = <HTMLInputElement>document.getElementById("preke_pavadinimas");
-let inputPrice = <HTMLInputElement>document.getElementById("preke_kaina");
-let inputAmount = <HTMLInputElement>document.getElementById("preke_kiekis") as HTMLInputElement; // galime gauti value su metodu - inputName.value;
+let inputName = <HTMLInputElement>document.getElementById("vardas");
+let inputPrice = <HTMLInputElement>document.getElementById("pavarde");
+let inputAmount = <HTMLInputElement>document.getElementById("atlyginimas") as HTMLInputElement; // galime gauti value su metodu - inputName.value;
 
-console.log("BB", bendraInfo);
+console.log("BB", inputName, inputPrice, inputAmount);
 
 class Prekes {
 
@@ -64,13 +64,13 @@ let rodykPrekiuSarasa = () => {
 
             const button = document.createElement("button");
             button.setAttribute("class", "btn btn-danger delete-item");
-            button.innerHTML = " X " + preke.kiekis;
+            button.innerHTML = "<i class=\"bi bi-x-lg\"></i>";
 
             p.innerHTML = " index: <strong>" + index + '<br>'
                 + "</strong> Prekė: <strong>" + preke.pavadinimas.toUpperCase() + '<br>'
                 + "</strong> Kaina: <strong>" + preke.kainaSuPVM.toFixed(2) + '</strong>€ <i >su PVM</i>, <strong>' + preke.kaina + '</strong>€ <i>be PVM</i><br>' //parseFloat(vykdom(cmToInch).toFixed(2)
                 // + "</strong> Kaina su PVM: <strong>" + preke.kainaSuPVM + '</strong> € <br>' //parseFloat(vykdom(cmToInch).toFixed(2)
-                + " Kiekis: <strong>" + Math.floor(preke.kiekis) + '</strong><br><hr>';
+                + " Kiekis: <strong>" + Math.floor(preke.kiekis) + '</strong> ';
 
             div.append(p, button);
 

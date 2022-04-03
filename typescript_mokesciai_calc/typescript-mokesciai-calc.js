@@ -11,10 +11,10 @@ const outputAtsakymas3 = document.getElementById("atsakymas");
 const bendraInfo = document.getElementById("bendra-info");
 const actionButton = document.getElementById("action");
 const clearStorageButton = document.getElementById("clear");
-let inputName = document.getElementById("preke_pavadinimas");
-let inputPrice = document.getElementById("preke_kaina");
-let inputAmount = document.getElementById("preke_kiekis"); // galime gauti value su metodu - inputName.value;
-console.log("BB", bendraInfo);
+let inputName = document.getElementById("vardas");
+let inputPrice = document.getElementById("pavarde");
+let inputAmount = document.getElementById("atlyginimas"); // galime gauti value su metodu - inputName.value;
+console.log("BB", inputName, inputPrice, inputAmount);
 class Prekes {
     constructor(_pavadinimas, _kaina, _kiekis) {
         this._pavadinimas = _pavadinimas;
@@ -48,12 +48,12 @@ let rodykPrekiuSarasa = () => {
             const p = document.createElement("p");
             const button = document.createElement("button");
             button.setAttribute("class", "btn btn-danger delete-item");
-            button.innerHTML = " X " + preke.kiekis;
+            button.innerHTML = "<i class=\"bi bi-x-lg\"></i>";
             p.innerHTML = " index: <strong>" + index + '<br>'
                 + "</strong> Prekė: <strong>" + preke.pavadinimas.toUpperCase() + '<br>'
                 + "</strong> Kaina: <strong>" + preke.kainaSuPVM.toFixed(2) + '</strong>€ <i >su PVM</i>, <strong>' + preke.kaina + '</strong>€ <i>be PVM</i><br>' //parseFloat(vykdom(cmToInch).toFixed(2)
                 // + "</strong> Kaina su PVM: <strong>" + preke.kainaSuPVM + '</strong> € <br>' //parseFloat(vykdom(cmToInch).toFixed(2)
-                + " Kiekis: <strong>" + Math.floor(preke.kiekis) + '</strong><br><hr>';
+                + " Kiekis: <strong>" + Math.floor(preke.kiekis) + '</strong> ';
             div.append(p, button);
             outputAtsakymas3 === null || outputAtsakymas3 === void 0 ? void 0 : outputAtsakymas3.appendChild(div); // outputAtsakymas3.innerHTML = tmp; // atvaizdavimas DOM
             button.onclick = () => {
