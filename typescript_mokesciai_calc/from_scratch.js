@@ -52,13 +52,13 @@ class Anketa {
     ;
     get atlyginimas() { return this._atlyginimas; }
     ;
-    get atlyginimasGPM() { return ((20 / 100) * this._atlyginimas).toFixed(2); }
+    get gmp() { return parseFloat((0.2 * this._atlyginimas).toFixed(2)); }
     ;
-    get atlyginimasVSD() { return ((6.98 / 100) * this._atlyginimas).toFixed(2); }
+    get vsd() { return parseFloat((0.0698 * this._atlyginimas).toFixed(2)); }
     ;
-    get atlyginimasPSD() { return ((12.52 / 100) * this._atlyginimas).toFixed(2); }
+    get psd() { return parseFloat((0.1252 * this._atlyginimas).toFixed(2)); }
     ;
-    set atlyginimasNPD(newAtlyginimas) { this._atlyginimas = newAtlyginimas; }
+    get sum() { return this.gmp + this.vsd + this.psd; }
     ;
 }
 let darbuotojas = [];
@@ -67,39 +67,47 @@ let output = () => {
         // išvalom seną info prieš atvaizduodami naują
         outputEmpList.innerHTML = '';
         outputTaxes.innerHTML = '';
+        let gmpSuma = 0;
+        let vsdSuma = 0;
+        let psdSuma = 0;
         // atvaizduojam darbuotojų info sarašą
         darbuotojas.forEach((darbuotojas, index) => {
             let npd = 0;
-            let npd2 = 0;
+            gmpSuma += darbuotojas.gmp;
+            vsdSuma += darbuotojas.vsd;
+            psdSuma += darbuotojas.psd;
+            if (darbuotojas.atlyginimas > 730) {
+                npd += parseInt((460 - 0.26 * (1573.32 - 730)).toFixed(2));
+                console.log('NPD, kai alga > 730', npd);
+            }
+            if (darbuotojas.atlyginimas < 730) {
+                npd += 460;
+                console.log('NPD, kai alga < 730', darbuotojas.vardas);
+            }
             // let visoTaxes = parseInt(darbuotojas.atlyginimasPSD) + parseInt(darbuotojas.atlyginimasGPM) + parseInt(darbuotojas.atlyginimasVSD);
             // console.log(visoTaxes)
             // sukuriam DOM elementus kiekvienam darbuotojui:
             // div elementas, kuriame bus paragrafas su darbuotojo info ir button(delete-employee) elementas
-            const div = document.createElement('div');
-            div.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
-            if (darbuotojas.atlyginimas > 730) {
-                npd += parseInt((460 + 0.26 * (darbuotojas.atlyginimas - 730)).toFixed(2));
-                npd2 += parseInt((460 + 0.26 * (darbuotojas.atlyginimas - 730)).toFixed(2));
-                console.log('TEST', darbuotojas.vardas);
-            }
-            if (darbuotojas.atlyginimas < 730) {
-                npd += 460;
-                npd2 += 460;
-                console.log('TEST', darbuotojas.vardas);
-            }
+            const div = document.createElement('ul');
+            div.setAttribute("class", "list-group");
             // paragrafas su darbuotojo info
-            const p = document.createElement("p");
-            p.innerHTML = " index: <strong>" + index + '</strong><br>' +
-                "Vardas: <strong>" + darbuotojas.vardas + '</strong><br>' +
-                "Pavardė: <strong>" + darbuotojas.pavarde + '</strong><br>' +
-                "Atlyginimas: <strong>" + darbuotojas.atlyginimas + '</strong><br>' +
-                "NPD: <strong>" + npd + '</strong><br>' + //460 – 0,26 x (gyventojo mėnesio su darbo santykiais susijusios pajamos – 730 Eur);
-                "NPD2: <strong>" + npd2 + '</strong><br>' + //460 – 0,26 x (gyventojo mėnesio su darbo santykiais susijusios pajamos – 730 Eur);
-                "GPM: <strong>" + darbuotojas.atlyginimasGPM + '</strong><br>' +
-                "VSD: <strong>" + darbuotojas.atlyginimasVSD + '</strong><br>' +
-                "PSD: <strong>" + darbuotojas.atlyginimasPSD + '</strong><br>' +
-                "VISO mokesčiai: <strong>" + (parseInt(darbuotojas.atlyginimasPSD) + parseInt(darbuotojas.atlyginimasGPM) + parseInt(darbuotojas.atlyginimasVSD)) + '</strong><br>' +
-                "Atlyginimas su mokesčiais: <strong>" + (parseInt(darbuotojas.atlyginimasPSD) + parseInt(darbuotojas.atlyginimasGPM) + parseInt(darbuotojas.atlyginimasVSD) + darbuotojas.atlyginimas) + '</strong>';
+            // const p = document.createElement("li");
+            // p.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
+            console.log('YYY');
+            const decorStart = "<li class=\"list-group-item d-flex justify-content-between align-items-center\">";
+            const decorEnd = "</li>";
+            div.innerHTML = decorStart + "index: <strong>" + index + '</strong>' + decorEnd +
+                decorStart + "Vardas: <strong>" + darbuotojas.vardas + '</strong>' + decorEnd +
+                decorStart + "Pavardė: <strong>" + darbuotojas.pavarde + '</strong>' + decorEnd +
+                decorStart + "Atlyginimas: <strong>" + darbuotojas.atlyginimas + '€</strong>' + decorEnd +
+                decorStart + "NPD: <strong>" + npd + '€</strong>' + decorEnd + //460 – 0,26 x (gyventojo mėnesio su darbo santykiais susijusios pajamos – 730 Eur);
+                decorStart + "GPM: <strong>" + darbuotojas.gmp + '€</strong>' + decorEnd +
+                decorStart + "VSD: <strong>" + darbuotojas.vsd + '€</strong>' + decorEnd +
+                decorStart + "PSD: <strong>" + darbuotojas.psd + '€</strong>' + decorEnd +
+                decorStart + "VISO mokesčiai: <strong>" + (darbuotojas.sum).toFixed(2) + '€</strong>' + decorEnd;
+            console.log('XXX');
+            const divButtons = document.createElement('div');
+            divButtons.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center pt-5");
             // buttonEdit(edit-employee)
             const buttonEdit = document.createElement('button');
             buttonEdit.setAttribute("class", "btn btn-success edite-item");
@@ -109,8 +117,9 @@ let output = () => {
             button.setAttribute("class", "btn btn-danger delete-item");
             button.innerHTML = "<i class=\"bi bi-trash3\"></i>";
             // sudedame elementus vieną į kitą(append)
-            div.append(p, button, buttonEdit);
-            outputEmpList.appendChild(div);
+            // div.append(p);
+            divButtons.append(buttonEdit, button);
+            outputEmpList.append(divButtons, div);
             // funkcija konkrečios anketos redagavimui
             buttonEdit.onclick = () => {
                 // editSingleEmployee(index);
@@ -121,10 +130,28 @@ let output = () => {
             };
             // funkcija konkrečios anketos trinimui
             button.onclick = () => {
-                deleteSingleEmployee(index);
+                if (confirm('Ar tikrai norite ištrinti darbuotojo anketą?')) {
+                    // Save it!
+                    deleteSingleEmployee(index);
+                }
+                else {
+                    // Do nothing!
+                    console.log('Thing was not saved to the database.');
+                }
+                // deleteSingleEmployee(index);
                 console.log("Istrintas: ", darbuotojas.vardas);
             };
         });
+        // paragrafas imones sumokamu mokesciu apidendrinimui
+        const pTaxes = document.createElement("p");
+        const decorStart = "<div class=\"list-group-item d-flex justify-content-between align-items-center\">";
+        const decorEnd = "</div>";
+        pTaxes.innerHTML = decorStart + "Benda GMP suma: <strong>" + (gmpSuma).toFixed(2) + '€</strong>' + decorEnd +
+            decorStart + "Benda VSD suma:<strong>" + (vsdSuma).toFixed(2) + '€</strong>' + decorEnd +
+            decorStart + "Benda PSD suma:<strong>" + (psdSuma).toFixed(2) + '€</strong>' + decorEnd +
+            decorStart + "Bendra mokesčių suma:<strong>" + (psdSuma + vsdSuma + gmpSuma).toFixed(2) + '€</strong>' + decorEnd;
+        outputTaxes.appendChild(pTaxes);
+        console.log("decoras", decorStart, decorEnd);
     }
 }; // function end
 // atsisiunčiame duomenis iš localSorage
@@ -198,3 +225,11 @@ if (btnDeleteAllData != null && outputEmpList != null) {
 }
 const id = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
 console.log("id", id);
+let gpm = 0;
+let sum = 0;
+darbuotojas.forEach((e) => {
+    console.log(e.vardas, e.gmp, e.atlyginimas);
+    gpm += e.gmp;
+    sum += e.sum;
+});
+console.log("Įmonė turės sumokėti: " + gpm, sum);
