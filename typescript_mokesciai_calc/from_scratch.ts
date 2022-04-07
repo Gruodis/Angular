@@ -53,43 +53,31 @@ const outputTaxes = document.getElementById('output-taxes');
 const btnAddEmploy = document.getElementById('add-employee');
 const btnDeleteAllData = document.getElementById('delete-all-data');
 
-console.log("DOM ", inputVardas, inputPavarde, inputAtlyginimas, outputEmpList, outputTaxes, btnAddEmploy, btnDeleteAllData);
+// console.log("DOM ", inputVardas, inputPavarde, inputAtlyginimas, outputEmpList, outputTaxes, btnAddEmploy, btnDeleteAllData);
 
-let idData = 0;
-localStorage.setItem('storeID', JSON.stringify(idData));
-let trx = 0;
-let getLastUsedID = () => {
 
-    let idTemp: number; //laikinas kitamasis atsisustiems id is localStorage
+let idTemp: number; //laikinas kitamasis atsisustiems id is localStorage
 
     //!!!!!!! atsisiunciant/irasant duomenis JSON.parse / JSON.stringify nereikia naudoti, kai kintamasis yra NUMBER 
-
-    const idExist = localStorage.getItem('storeID'); // atsisiunciame duomenis
+let checkID = () => {
+    let idExist = localStorage.getItem('storeID'); // atsisiunciame duomenis
     if (idExist === null) { // jeigu duomenu apie id neradome ar jie sugadinti, kintamajam id priskiriam 0
         idTemp = 0;
-        console.log('idtemp', idTemp);
+        console.log('idtemp 0 ', idTemp);
     }
 
     if (idExist != null) {
         // let x = JSON.parse(idExist); // isitikiname, kad gautas is localStorage kintamasis yra sveikasis skaicius
         idTemp = JSON.parse(idExist); // isitikiname, kad gautas is localStorage kintamasis yra sveikasis skaicius
-
-        idTemp++;
-        trx = idTemp;
-        localStorage.setItem('storeID', JSON.stringify(idTemp)) // irasome sugeneruota id i localStorage
-
-        console.log(idTemp);
-        return idTemp;
-
-        //const idKeep = id; // issaugome turima id, kuri veliau naudosime naujo id generavimui
     }
-
 }
-console.log('GET: ===> ', getLastUsedID());
+checkID();
+
+console.log('GET: ===> ');
 
 class Anketa {
     constructor(
-        private _id: number,
+        private _userId: number,
         private _vardas: string,
         private _pavarde: string,
         private _atlyginimas: number
@@ -97,7 +85,7 @@ class Anketa {
     ) { }
 
 
-    get id() { return this._id };
+    get userId() { return this._userId };
     get vardas() { return this._vardas };
     get pavarde() { return this._pavarde };
     get atlyginimas() { return this._atlyginimas };
@@ -115,15 +103,34 @@ class Anketa {
 
 let darbuotojas: Anketa[] = [];
 
+let checkIfEmpty = () => {
+    if (darbuotojas.length === 0 && outputEmpList != null && outputTaxes != null) {
+        outputTaxes.innerHTML = '';
+
+        const pLs = document.createElement('p');
+        const pTx = document.createElement('p');
+        pLs.innerHTML = "Duomenų bazė - tuščia.";
+        pTx.innerHTML = "Duomenų bazė - tuščia.";
+        outputEmpList.appendChild(pLs);
+        outputTaxes.appendChild(pTx);
+    }
+}
+checkIfEmpty();
+
+
 let output = () => {
 
+
     if (outputTaxes != null && outputEmpList != null) {
+
+
 
 
         // išvalom seną DOM turinį prieš atvaizduodami naują
 
         outputEmpList.innerHTML = '';
         outputTaxes.innerHTML = '';
+
 
         let gmpSuma = 0;
         let vsdSuma = 0;
@@ -171,7 +178,7 @@ let output = () => {
 
             const decorStart = "<li class=\"list-group-item d-flex justify-content-between align-items-center\">";
             const decorEnd = "</li>";
-            div.innerHTML = decorStart + "id: <strong>" + darbuotojas.id + '</strong>' + decorEnd +
+            div.innerHTML = decorStart + "id: <strong>" + darbuotojas.userId + '</strong>' + decorEnd +
                 decorStart + "Vardas: <strong>" + darbuotojas.vardas + '</strong>' + decorEnd +
                 decorStart + "Pavardė: <strong>" + darbuotojas.pavarde + '</strong>' + decorEnd +
                 decorStart + "Atlyginimas: <strong>" + darbuotojas.atlyginimas + '€</strong>' + decorEnd +
@@ -227,6 +234,8 @@ let output = () => {
 
 
         // paragrafas imones sumokamu mokesciu apidendrinimui
+
+        if (darbuotojas.length > 0) {
         const pTaxes = document.createElement("p");
         const decorStart = "<div class=\"list-group-item d-flex justify-content-between align-items-center\">";
         const decorEnd = "</div>";
@@ -236,10 +245,9 @@ let output = () => {
             decorStart + "Bendra mokesčių suma:<strong>" + (psdSuma + vsdSuma + gmpSuma).toFixed(2) + '€</strong>' + decorEnd;
         outputTaxes.appendChild(pTaxes);
 
-        console.log("decoras", decorStart, decorEnd);
-
-        let remoteData = localStorage.getItem('saugomLocalStorage')
-        if (outputEmpList != null && remoteData === null) {
+            console.log("decoras", decorStart, decorEnd);
+        }
+        else {
             outputTaxes.innerHTML = '';
 
             const pLs = document.createElement('p');
@@ -249,12 +257,11 @@ let output = () => {
             outputEmpList.appendChild(pLs);
             outputTaxes.appendChild(pTx);
         }
-
-
+        if (btnDeleteAllData != null) {
+            btnDeleteAllData.innerText = ("Ištrinti visas (" + darbuotojas.length + ") anketas");
+        }
 
     }
-
-
 }; // function end
 
 // atsisiunčiame duomenis iš localSorage
@@ -265,32 +272,20 @@ if (remoteData != null) {
     let parseJSON = JSON.parse(remoteData);
 
     interface Atributai {
-
-        _id: number,
+        _userId: number,
         _vardas: string,
         _pavarde: string,
         _atlyginimas: number
     }
-
     parseJSON.forEach((anketa: Atributai) => {
-        let construct = new Anketa(anketa._id, anketa._vardas, anketa._pavarde, anketa._atlyginimas)
+        let construct = new Anketa(anketa._userId, anketa._vardas, anketa._pavarde, anketa._atlyginimas)
         darbuotojas.push(construct)
     });
+
     output();
 }
 
-if (remoteData === null && outputEmpList != null && outputTaxes != null) {
 
-    // outputTaxes.innerHTML = '';
-    const pLs = document.createElement('p');
-    const pTx = document.createElement('p');
-    pLs.innerHTML = "Duomenų bazė - tuščia.";
-    pTx.innerHTML = "Duomenų bazė - tuščia.";
-    outputEmpList.appendChild(pLs);
-    outputTaxes.appendChild(pTx);
-    console.log('FFF')
-
-}
 
 // funkcija iš input fields surinktų duomenų išsaugojimui
 if (inputVardas != null && inputPavarde != null && inputAtlyginimas != null && btnAddEmploy != null) {
@@ -299,15 +294,17 @@ if (inputVardas != null && inputPavarde != null && inputAtlyginimas != null && b
 
         if (inputVardas.value != "" && inputPavarde.value != "" && inputAtlyginimas.valueAsNumber != null) {
 
-            console.log('GET: ===> ', getLastUsedID());
-            darbuotojas.push(new Anketa(trx, inputVardas.value, inputPavarde.value, inputAtlyginimas.valueAsNumber)); //sukuriame naujo darbuotojo anketą pagal class Anketa
-        localStorage.setItem('saugomLocalStorage', JSON.stringify(darbuotojas));
+            console.log('Isaugom nauja anketa GET: ===> ');
+            darbuotojas.push(new Anketa(idTemp, inputVardas.value, inputPavarde.value, inputAtlyginimas.valueAsNumber)); //sukuriame naujo darbuotojo anketą pagal class Anketa
+            localStorage.setItem('saugomLocalStorage', JSON.stringify(darbuotojas));
+            idTemp++;
+            localStorage.setItem('storeID', JSON.stringify(idTemp)) // irasome sugeneruota id i localStorage
             // console.log("LocalStorage", localStorage.getItem('saugomLocalStorage'))
             // console.log("masyvas", darbuotojas);
             inputVardas.value = '';
             inputPavarde.value = '';
             inputAtlyginimas.value = '';
-            console.log('GET: ===> ', getLastUsedID());
+            console.log('GET: ===> ');
             output();
         }
         else {
@@ -342,14 +339,15 @@ let deleteSingleEmployee = (id: number) => { // pasiimame objekto, kuri trinsime
 
 // funkcija visu anketu trinimui
 if (btnDeleteAllData != null && outputEmpList != null) {
+    btnDeleteAllData.innerText = ("Ištrinti visas (" + darbuotojas.length + ") anketas");
     btnDeleteAllData.onclick = () => { // pasiimame objekto, kuri trinsime "id" reikšmę
         // ištriname informaciją iš localStorage
         localStorage.removeItem('saugomLocalStorage');
         // ištriname informaciją iš masyvo
         darbuotojas = [];
         // atvaizduojame pasiveiktusius duomenis DOM elementuose
+        console.log("masyvas == > ", darbuotojas.length);
         output();
-
     }
 }
 // const id = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
@@ -359,7 +357,7 @@ if (btnDeleteAllData != null && outputEmpList != null) {
 let gpm = 0;
 let sum = 0;
 darbuotojas.forEach((e: Anketa) => {
-    console.log(e.id, e.vardas, e.gmp, e.atlyginimas);
+    console.log(e.userId, e.vardas, e.gmp, e.atlyginimas);
     gpm += e.gmp;
     sum += e.sum
 });
