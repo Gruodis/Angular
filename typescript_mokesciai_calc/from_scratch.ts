@@ -1,5 +1,6 @@
 /*
 
+
 Darbuotojo duomenu anketa:
 
 input Vardas;
