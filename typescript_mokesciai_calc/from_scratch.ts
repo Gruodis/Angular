@@ -15,7 +15,7 @@ Duomenų apdorojimas ir atvaizdavimas:
 kiekvienoje anketoje atvaizduoti(vardas, pavarde, atlyginimas);
 kiekvienoje anketoje suskaičiuoti (NPD, GMP, VSD, PSD);
 
-atskirame DOM elemente susumuoti ir atvaizduoti bendrą informaciją(GMP, PSD, VSD, Bendra mokesčių suma)
+atskirame DOM elemente susumuoti ir atvaizduoti bendrą informaciją(GMP, PSD, VSD, Bendra mokesčių suma);
 
 
 Extra features:
