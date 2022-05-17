@@ -1,3 +1,4 @@
+"use strict";
 /*
 TypeScript - Data Modifiers
 In object-oriented programming, the concept of 'Encapsulation' is used to make class members public or private i.e. a class can control the visibility of its data members.
@@ -51,7 +52,7 @@ class Zmogus {
     // public getVardas() { // naudojame zemiau esanti get Vardas()
     //     return this.vardas;
     // }
-    get vardasX() {
+    get vardas() {
         return this._vardas + '\n \n';
     }
     // set naudojame saugiai pakeisti kintamojo reiksmes, kai nurodytas - private(modifier), 
@@ -74,7 +75,7 @@ class Zmogus {
             this._amzius = amziusNew;
         }
     }
-    set vardasX(vardasNew) {
+    set vardas(vardasNew) {
         this._vardas = vardasNew;
     }
     // private output() { // neleistu issikviesti sio metodo uz class ribu.
@@ -91,8 +92,8 @@ const petras = new Zmogus('Petras', 54, 'emailas@gmail.com');
 // jonas.setAmzius(16);
 // vietoje jonas.setAmzius() naudojame jonas.Amzius = 14;
 petras.amzius = 14;
-petras.vardasX = "Kazys";
+petras.vardas = "Kazys";
 // console.log('getVardas: ' + petras.getVardas()); // vietoje petras.getVardas() naudojame petras.Vardas
-console.log('get Vardas: ' + petras.vardasX);
+console.log('get Vardas: ' + petras.vardas);
 jonas.output();
 petras.output();

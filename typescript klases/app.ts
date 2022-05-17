@@ -63,7 +63,7 @@ class Zmogus {
     // public getVardas() { // naudojame zemiau esanti get Vardas()
     //     return this.vardas;
     // }
-    get vardas() {
+    get vardasX() {
         return this._vardas + '\n \n';
     }
     // set naudojame saugiai pakeisti kintamojo reiksmes, kai nurodytas - private(modifier), 
@@ -87,7 +87,7 @@ class Zmogus {
             this._amzius = amziusNew;
         }
     }
-    set vardas(vardasNew: string) {
+    set vardasX(vardasNew: string) {
             this._vardas = vardasNew;
 
     }
@@ -111,10 +111,10 @@ const petras = new Zmogus('Petras', 54, 'emailas@gmail.com');
 // jonas.setAmzius(16);
 // vietoje jonas.setAmzius() naudojame jonas.Amzius = 14;
 petras.amzius = 14;
-petras.vardas = "Kazys"
+petras.vardasX = "Kazys"
 
 // console.log('getVardas: ' + petras.getVardas()); // vietoje petras.getVardas() naudojame petras.Vardas
-console.log('get Vardas: ' + petras.vardas);
+console.log('get Vardas: ' + petras.vardasX);
 
 
 

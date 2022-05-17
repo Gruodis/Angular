@@ -1,0 +1,1 @@
+// parametrizuotos klases
