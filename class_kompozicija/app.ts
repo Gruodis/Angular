@@ -29,9 +29,13 @@ class Darbuotojas {
 
     public psd() { return this._atlyginimas * 0.0698 }
 
+    public toString() { return this._vardas + " " + this._pavarde + " " + this._atlyginimas }
+
+    public toNumber() { return this._atlyginimas + this._atlyginimas * 2 }
+
 }
 
-// naudojame kompozicija, netiesiogiai redaguoti klase Darbuotojas
+// naudojame kompozicija, netiesiogiai redaguoti klase Darbuotojas duomenu atvaizdavima
 
 class Kompozicija {
     private _kompo: Darbuotojas; // nurodome klase Darbuotojas, kuri bus naudojama kompozicijai
@@ -47,6 +51,39 @@ class Kompozicija {
     }
 
 }
+
+class KompozicijaDu {
+
+
+    constructor(
+        private _pirmas: Darbuotojas,
+        private _antras: Darbuotojas,
+        // private _atlyginimas: number
+    ) { }
+
+    public toString() {
+        return this._pirmas.toString() + " --- " + this._antras.toString();
+    }
+
+    public apskaiciuoti() { return this._pirmas.toNumber() }
+
+}
+
+// trecias metodas kompozicijai aprasyti - funkcijai
+
+const darbinykas = (vardas: string, pavarde: string, atlyginimas: number) => {
+    return {
+        _vardas: vardas,
+        _pavarde: pavarde,
+        _atlyginimas: atlyginimas,
+
+    }
+
+}
+
+const emp1 = darbinykas('Galvanauskas', 'Bronius', 500);
+console.log(emp1)
+
 // masyvas sudarytas is "Darbuotojas", klases objektu
 const darbuotojai: Darbuotojas[] = [];
 
@@ -56,17 +93,33 @@ const jonas: Darbuotojas = new Darbuotojas("Jonas", "Jonaitis", 1200);
 jonas.vardas = "Vebras";
 const petras: Darbuotojas = new Darbuotojas("Petras", "Goga", 1300);
 
+const darius = new Kompozicija("Darius", "Kuosa", 1800);
 
+// sukuriame nauja objekta is dvieju objektu naudodami kompozicija
+const kompozicijaDu = new KompozicijaDu(new Darbuotojas("Gediminas", "Gric", 1300), new Darbuotojas("Algirdas", "Tumas", 1600)); // galime du naujus darbuotojus
+const kompozicijaTrys = new KompozicijaDu(jonas, petras); // galime naudoti sukurtus objektus
+
+// issaugome objetus masyve
 darbuotojai.push(jonas);
 darbuotojai.push(petras);
+
+// darbuotojai.push(darius);
 
 
 
 // console.log(darbuotojai);
 // istrinam 0 objekta is masyvo
 // darbuotojai.splice(0, 1);
-console.log(jonas.toString());
-console.log(jonas.gpm());
+console.log(darbuotojai);
+console.log(darbuotojai[0].vardas);
+console.log(`Jonas GPM: ` + jonas.gpm());
+
+// atvaizduojame duomenis naudodami kompoziciju metodus
+console.log(`\nDarius: ` + darius.toString());
+console.log(`\nJonas #2: ` + jonas.toNumber());
+console.log(`\nDu darbuotojai kompozicija #1: ` + kompozicijaDu.toString());
+console.log(`\nDu darbuotojai kompozicija #2: ` + kompozicijaTrys.toString());
+console.log(`\nDu darbuotojai kompozicija #3: `, kompozicijaDu.apskaiciuoti());
 
 let bendrasGpm = 0;
 
