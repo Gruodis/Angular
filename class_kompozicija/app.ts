@@ -96,8 +96,8 @@ const petras: Darbuotojas = new Darbuotojas("Petras", "Goga", 1300);
 const darius = new Kompozicija("Darius", "Kuosa", 1800);
 
 // sukuriame nauja objekta is dvieju objektu naudodami kompozicija
-const kompozicijaDu = new KompozicijaDu(new Darbuotojas("Gediminas", "Gric", 1300), new Darbuotojas("Algirdas", "Tumas", 1600)); // galime du naujus darbuotojus
-const kompozicijaTrys = new KompozicijaDu(jonas, petras); // galime naudoti sukurtus objektus
+const kompozicijaDu = new KompozicijaDu(new Darbuotojas("Gediminas", "Gric", 1300), new Darbuotojas("Algirdas", "Tumas", 1600)); // galime sukurti du naujus darbuotojus(objektus)
+const kompozicijaTrys = new KompozicijaDu(jonas, petras); // galime naudoti anksciau sukurtus objektus
 
 // issaugome objetus masyve
 darbuotojai.push(jonas);
@@ -129,6 +129,15 @@ darbuotojai.forEach((e: Darbuotojas) => {
 
 });
 
+darbuotojai.forEach((obj) => {
+    console.log(obj.vardas, obj.pavarde, obj.atlyginimas, obj.toNumber());
+
+    // Object.values(obj).forEach((val) => {
+    //     // 👇️ name Tom 0, country Chile 1
+    //     console.log(`Key: `, val);
+    // });
+
+});
 
 console.log(`Viso sumoketa GMP: `, bendrasGpm);
 

@@ -63,17 +63,17 @@ jonas.vardas = "Vebras";
 const petras = new Darbuotojas("Petras", "Goga", 1300);
 const darius = new Kompozicija("Darius", "Kuosa", 1800);
 // sukuriame nauja objekta is dvieju objektu naudodami kompozicija
-const kompozicijaDu = new KompozicijaDu(new Darbuotojas("Gediminas", "Gric", 1300), new Darbuotojas("Algirdas", "Tumas", 1600)); // galime du naujus darbuotojus
-const kompozicijaTrys = new KompozicijaDu(jonas, petras); // galime naudoti sukurtus objektus
+const kompozicijaDu = new KompozicijaDu(new Darbuotojas("Gediminas", "Gric", 1300), new Darbuotojas("Algirdas", "Tumas", 1600)); // galime sukurti du naujus darbuotojus(objektus)
+const kompozicijaTrys = new KompozicijaDu(jonas, petras); // galime naudoti anksciau sukurtus objektus
 // issaugome objetus masyve
-// darbuotojai.push(jonas);
-// darbuotojai.push(petras);
-darbuotojai.push(emp1);
+darbuotojai.push(jonas);
+darbuotojai.push(petras);
+// darbuotojai.push(darius);
 // console.log(darbuotojai);
 // istrinam 0 objekta is masyvo
 // darbuotojai.splice(0, 1);
 console.log(darbuotojai);
-// console.log(darbuotojai[0].vardas);
+console.log(darbuotojai[0].vardas);
 console.log(`Jonas GPM: ` + jonas.gpm());
 // atvaizduojame duomenis naudodami kompoziciju metodus
 console.log(`\nDarius: ` + darius.toString());
@@ -83,8 +83,14 @@ console.log(`\nDu darbuotojai kompozicija #2: ` + kompozicijaTrys.toString());
 console.log(`\nDu darbuotojai kompozicija #3: `, kompozicijaDu.apskaiciuoti());
 let bendrasGpm = 0;
 darbuotojai.forEach((e) => {
-    // console.log(e._vardas, ` alga: `, e._atlyginimas, ` GPM: `, e.gpm());
-    console.log(e._vardas, ` alga: `, e._atlyginimas, ` GPM: `);
-    // bendrasGpm += e.gpm();
+    console.log(e.vardas, ` alga: `, e.atlyginimas, ` GPM: `, e.gpm());
+    bendrasGpm += e.gpm();
+});
+darbuotojai.forEach((obj) => {
+    console.log(obj.vardas, obj.pavarde, obj.atlyginimas, obj.toNumber());
+    // Object.values(obj).forEach((val) => {
+    //     // 👇️ name Tom 0, country Chile 1
+    //     console.log(`Key: `, val);
+    // });
 });
 console.log(`Viso sumoketa GMP: `, bendrasGpm);
