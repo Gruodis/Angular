@@ -15,7 +15,7 @@ let inputName = document.getElementById("preke_pavadinimas");
 let inputPrice = document.getElementById("preke_kaina");
 let inputAmount = document.getElementById("preke_kiekis"); // galime gauti value su metodu - inputName.value;
 console.log("BB", bendraInfo);
-class Prekes {
+class Preke {
     constructor(_pavadinimas, _kaina, _kiekis) {
         this._pavadinimas = _pavadinimas;
         this._kaina = _kaina;
@@ -98,10 +98,13 @@ if (jsonParse != null) {
     let dataBank = JSON.parse(jsonParse);
     console.log('DATA: ', dataBank);
     dataBank.forEach((preke) => {
-        let applyClass = new Prekes(preke._pavadinimas, preke._kaina, preke._kiekis); // konstruojam JSON objektus pagal class Prekes template'a
+        let applyClass = new Preke(preke._pavadinimas, preke._kaina, preke._kiekis); // konstruojam JSON objektus pagal class Prekes template'a
         tiekejas.push(applyClass); // pushinam objektus sukonstruotus pagal class Prekes template'a i tiekejas[] masyva
     });
     rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach) 
+}
+else {
+    localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas));
 }
 ;
 /*
@@ -113,7 +116,7 @@ NAUJOS PREKES IVESTU DUOMENU PUSH(saugojimas) i masyva ir localStorage
 if (actionButton != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
     actionButton.onclick = () => {
         if (inputName.value != '' && inputPrice.value.length != 0 && inputAmount.value.length != 0) { // tikriname ar visi input laukai uzpildyti
-            tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva - tiekejas[].
+            tiekejas.push(new Preke(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva - tiekejas[].
             rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
             localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas));
             // isvalom input laukus po sekmingo duomenu issaugojimo

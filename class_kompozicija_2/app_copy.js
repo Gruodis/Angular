@@ -45,6 +45,7 @@ class Kompozicija {
         return this._kompo.atlyginimas + " KOMP " + this._kompo.vardas + " VA " + this._kompo.pavarde;
     }
     toNumber() { return this._atlyginimas + this._atlyginimas * 2; }
+    toPerskaiciuoti() { return this._atlyginimas * 2; }
 }
 class KompozicijaDu {
     constructor(_pirmas, _antras) {
@@ -59,9 +60,9 @@ class KompozicijaDu {
 // trecias metodas kompozicijai aprasyti - funkcija
 const darbinykas = (vardas, pavarde, atlyginimas) => {
     return {
-        _vardas: vardas,
-        _pavarde: pavarde,
-        _atlyginimas: atlyginimas,
+        vardas: vardas,
+        pavarde: pavarde,
+        atlyginimas: atlyginimas,
     };
 };
 const emp1 = darbinykas('Galvanauskas', 'Bronius', 500);
@@ -81,6 +82,7 @@ const kompozicijaTrys = new KompozicijaDu(jonas, petras); // galime naudoti anks
 darbuotojai.push(jonas);
 darbuotojai.push(petras);
 darbuotojai.push(darius);
+// darbuotojai.push(emp1);
 // console.log(darbuotojai);
 // istrinam 0 objekta is masyvo
 // darbuotojai.splice(0, 1);
@@ -98,11 +100,12 @@ darbuotojai.forEach((e) => {
     console.log(`\n`, e.vardas, ` alga: `, e.atlyginimas, ` GPM: `, e.gpm(), `\n`);
     bendrasGpm += e.gpm();
 });
-darbuotojai.forEach((obj) => {
-    console.log(`\n`, obj.vardas, obj.pavarde, obj.atlyginimas, obj.toNumber(), `\n`);
-    // Object.values(obj).forEach((val) => {
-    //     // 👇️ name Tom 0, country Chile 1
-    //     console.log(`Key: `, val);
-    // });
-});
+// darbuotojai.forEach((obj) => {
+//     console.log(`\n`, obj.vardas, obj.pavarde, obj.atlyginimas, obj.toNumber(), `\n`);
+//     // Object.values(obj).forEach((val) => {
+//     //     // 👇️ name Tom 0, country Chile 1
+//     //     console.log(`Key: `, val);
+//     // });
+// });
+console.log(`Viso sumoketa GMP: `, bendrasGpm);
 console.log(`Viso sumoketa GMP: `, bendrasGpm);

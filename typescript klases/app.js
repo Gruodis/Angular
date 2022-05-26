@@ -1,3 +1,4 @@
+"use strict";
 /*
 TypeScript - Data Modifiers
 In object-oriented programming, the concept of 'Encapsulation' is used to make class members public or private i.e. a class can control the visibility of its data members.

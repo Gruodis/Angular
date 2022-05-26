@@ -18,7 +18,7 @@ let inputAmount = <HTMLInputElement>document.getElementById("preke_kiekis") as H
 
 console.log("BB", bendraInfo);
 
-class Prekes {
+class Preke {
 
     constructor(
         private _pavadinimas: string,
@@ -118,7 +118,7 @@ let rodykPrekiuSarasa = () => {
     }
 };
 
-let tiekejas: Prekes[] = []; // deklaruojam tuscia masyva i kuri bus push'inami duomenys is pildymo formos
+let tiekejas: Preke[] = []; // deklaruojam tuscia masyva i kuri bus push'inami duomenys is pildymo formos
 
 
 /*
@@ -141,13 +141,14 @@ let jsonParse = localStorage.getItem('saugomLocalStorage');
             _kiekis: number
         }
         dataBank.forEach((preke: prekesAtributai) => { // imame JSON objektus
-            let applyClass = new Prekes(preke._pavadinimas, preke._kaina, preke._kiekis); // konstruojam JSON objektus pagal class Prekes template'a
+            let applyClass = new Preke(preke._pavadinimas, preke._kaina, preke._kiekis); // konstruojam JSON objektus pagal class Prekes template'a
             tiekejas.push(applyClass); // pushinam objektus sukonstruotus pagal class Prekes template'a i tiekejas[] masyva
 
         }
         );
         rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach) 
-    };
+}
+else { localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas)) };
 
 
 /*
@@ -159,7 +160,7 @@ NAUJOS PREKES IVESTU DUOMENU PUSH(saugojimas) i masyva ir localStorage
 if (actionButton != null) { //butina patikrinti ar egzistuoja DOM elementai(mygtukas ir input laukai)
     actionButton.onclick = () => {
         if (inputName.value != '' && inputPrice.value.length != 0 && inputAmount.value.length != 0) { // tikriname ar visi input laukai uzpildyti
-            tiekejas.push(new Prekes(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva - tiekejas[].
+            tiekejas.push(new Preke(inputName.value, inputPrice.valueAsNumber, inputAmount.valueAsNumber)); // push'inam ivestus duomenis i masyva - tiekejas[].
             rodykPrekiuSarasa(); // atvaizduojam duomenis, kuriuos push'inom i masyva (su forEach)
             localStorage.setItem('saugomLocalStorage', JSON.stringify(tiekejas));
 

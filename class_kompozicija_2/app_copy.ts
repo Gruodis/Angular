@@ -68,6 +68,7 @@ class Kompozicija {
         return this._kompo.atlyginimas + " KOMP " + this._kompo.vardas + " VA " + this._kompo.pavarde;
     }
     public toNumber() { return this._atlyginimas + this._atlyginimas * 2 }
+    public toPerskaiciuoti() { return this._atlyginimas * 2 }
 
 
 }
@@ -93,9 +94,9 @@ class KompozicijaDu {
 
 const darbinykas = (vardas: string, pavarde: string, atlyginimas: number) => {
     return {
-        _vardas: vardas,
-        _pavarde: pavarde,
-        _atlyginimas: atlyginimas,
+        vardas: vardas,
+        pavarde: pavarde,
+        atlyginimas: atlyginimas,
 
     }
 
@@ -124,6 +125,7 @@ darbuotojai.push(jonas);
 darbuotojai.push(petras);
 
 darbuotojai.push(darius);
+// darbuotojai.push(emp1);
 
 
 
@@ -149,15 +151,16 @@ darbuotojai.forEach((e) => {
 
 });
 
-darbuotojai.forEach((obj) => {
-    console.log(`\n`, obj.vardas, obj.pavarde, obj.atlyginimas, obj.toNumber(), `\n`);
+// darbuotojai.forEach((obj) => {
+//     console.log(`\n`, obj.vardas, obj.pavarde, obj.atlyginimas, obj.toNumber(), `\n`);
 
-    // Object.values(obj).forEach((val) => {
-    //     // 👇️ name Tom 0, country Chile 1
-    //     console.log(`Key: `, val);
-    // });
+//     // Object.values(obj).forEach((val) => {
+//     //     // 👇️ name Tom 0, country Chile 1
+//     //     console.log(`Key: `, val);
+//     // });
 
-});
+// });
 
+console.log(`Viso sumoketa GMP: `, bendrasGpm);
 console.log(`Viso sumoketa GMP: `, bendrasGpm);
 
