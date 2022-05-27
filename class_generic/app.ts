@@ -75,9 +75,48 @@ laipsniai.sort(function (a, b) {
     return a - b;
 });
 
+laipsniai.forEach(d => {
+    console.log(d);
+})
+
+vardai.sort().forEach(a => {
+    console.log(a);
+})
 
 console.log(laipsniai);
 console.log(vardai.sort());
 
 
-////////////////////////////////////////////////////////
+/*////////////////////////////////////////////////////////
+
+generic class
+
+generic interface
+
+*/
+
+interface genericPraletimas {
+
+    ak: Number,
+    tabelis: Number,
+
+}
+
+class Darbuotojas<T, Y>{
+    public tmp: T;
+    constructor(
+        public vardas: T,
+        public id: Y
+    ) { this.tmp = this.vardas; }
+
+
+    public atvaizduoti() { return this.vardas + ' ' + this.id + ' \n'; }
+}
+
+let zigmas = new Darbuotojas('Zigmas', 345633);
+let vidas = new Darbuotojas('Vidas', 'LT-5443345-02');
+let vida = new Darbuotojas<string, genericPraletimas>('zizu', { ak: 122221, tabelis: 3342342 });
+
+vida.id.tabelis
+
+console.log(zigmas.atvaizduoti(), vidas.atvaizduoti(), vida.id.ak);

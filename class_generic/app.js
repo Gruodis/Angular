@@ -44,6 +44,24 @@ vardai = pridetiLaipsni(vardai, 'Gedas');
 laipsniai.sort(function (a, b) {
     return a - b;
 });
+laipsniai.forEach(d => {
+    console.log(d);
+});
+vardai.sort().forEach(a => {
+    console.log(a);
+});
 console.log(laipsniai);
 console.log(vardai.sort());
-////////////////////////////////////////////////////////
+class Darbuotojas {
+    constructor(vardas, id) {
+        this.vardas = vardas;
+        this.id = id;
+        this.tmp = this.vardas;
+    }
+    atvaizduoti() { return this.vardas + ' ' + this.id + ' \n'; }
+}
+let zigmas = new Darbuotojas('Zigmas', 345633);
+let vidas = new Darbuotojas('Vidas', 'LT-5443345-02');
+let vida = new Darbuotojas('zizu', { ak: 122221, tabelis: 3342342 });
+vida.id.tabelis;
+console.log(zigmas.atvaizduoti(), vidas.atvaizduoti(), vida.id.ak);
