@@ -18,6 +18,17 @@ let l2 = sujungiam('Simas', 9); // galime nenurodyti argumentu('simas', 9) tipo,
 let l3 = sujungiam('', 9); // galime nurodyti konkretu argumento tipa, kuris gali buti string arba null
 console.log('L2', l2, sujungiam(9, 'Gedas'));
 ////////////////////////////////////////////////////////////////
+// naudojame extends
+// i funkcijos parametrus perduodam objekta, kuriame yra - firstName ir lastName
+// let vardasPavarde = (obj: { firstName: string; lastName: string }) => { // nurodome, kad i funkcijos parametrus gali patekti tik firstName ir lastname
+let vardasPavarde = (obj) => {
+    return Object.assign(Object.assign({}, obj), { fullName: obj.firstName + ' ' + obj.lastName });
+};
+let l4 = vardasPavarde({ firstName: 'Bob', lastName: 'Bundy' }); // sukuriame nauja objekta is vardo ir pavardes
+console.log('Vardas ir pavarde \n', l4.fullName);
+let l5 = vardasPavarde({ firstName: 'Darius', lastName: 'Gujus', age: 45, height: 180 }); // sukuriame nauja objekta is vardo, pavardes, amziaus ir tt.
+console.log('Vardas ir pavarde, amzius \n', l5.fullName, l5.age, l5.height);
+/////////////////////////////////////////////////////////////////
 let laipsniai = [5, 6, 7, 8, 9, 10];
 let vardai = ['Jonas', 'Petras', 'Bronius'];
 function pridetiLaipsni(masyvas, reiksme) {

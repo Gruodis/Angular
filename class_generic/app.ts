@@ -30,6 +30,30 @@ console.log('L2', l2, sujungiam(9, 'Gedas'));
 
 ////////////////////////////////////////////////////////////////
 
+
+//
+// funkcija, kuria iskvieciant privaloma nurodyti firstName ir lastName,
+// bet iskvietimo metu galime nurodyti ir kitus objekto propercius, tam naudojame <T extends ... { objekto properciai, kurie BUTINI}
+
+
+// let vardasPavarde = (obj: { firstName: string; lastName: string }) => { // nurodome, kad i funkcijos parametrus gali patekti tik objektas sudarytas is firstName ir lastName
+let vardasPavarde = <T extends { firstName: string; lastName: string }>(obj: T) => { // nurodome, kad iskviesdami funkcija privalome nurodyti varda ir pavarde, bei galime i objekta perduoti papildomus argumentus pvz. age: 6
+    return {
+        ...obj,
+        fullName: obj.firstName + ' ' + obj.lastName
+    }
+}
+
+let l4 = vardasPavarde({ firstName: 'Bob', lastName: 'Bundy' }); // sukuriame nauja objekta is vardo ir pavardes
+console.log('Vardas ir pavarde \n', l4.fullName);
+
+
+let l5 = vardasPavarde({ another: 14, firstName: 'Darius', lastName: 'Gujus', age: 45, height: 180 }); // sukuriame nauja objekta is vardo, pavardes, amziaus ir tt.
+console.log('Vardas ir pavarde, amzius \n', l5.fullName, l5.age, l5.height);
+
+
+/////////////////////////////////////////////////////////////////
+
 let laipsniai = [5, 6, 7, 8, 9, 10];
 let vardai = ['Jonas', 'Petras', 'Bronius'];
 
