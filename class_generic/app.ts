@@ -78,3 +78,6 @@ laipsniai.sort(function (a, b) {
 
 console.log(laipsniai);
 console.log(vardai.sort());
+
+
+////////////////////////////////////////////////////////
